@@ -1,0 +1,409 @@
+{
+	"info": {
+		"_postman_id": "2c7ee0e4-18cc-4d59-9b4c-246f02388253",
+		"name": "OpenAI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15454107"
+	},
+	"item": [
+		{
+			"name": "Chat",
+			"item": [
+				{
+					"name": "Send the response back to the model to summarize",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{OPENAI_API_KEY}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"model\": \"gpt-3.5-turbo-0613\",\r\n  \"messages\": [\r\n    {\"role\": \"user\", \"content\": \"What is the weather like in Boston?\"},\r\n    {\"role\": \"assistant\", \"content\": null, \"function_call\": {\"name\": \"get_current_weather\", \"arguments\": \"{ \\\"location\\\": \\\"Boston, MA\\\"}\"}},\r\n    {\"role\": \"function\", \"name\": \"get_current_weather\", \"content\": \"{\\\"temperature\\\": \\\"22\\\", \\\"unit\\\": \\\"celsius\\\", \\\"description\\\": \\\"Sunny\\\"}\"}\r\n  ],\r\n  \"functions\": [\r\n    {\r\n      \"name\": \"get_current_weather\",\r\n      \"description\": \"Get the current weather in a given location\",\r\n      \"parameters\": {\r\n        \"type\": \"object\",\r\n        \"properties\": {\r\n          \"location\": {\r\n            \"type\": \"string\",\r\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\r\n          },\r\n          \"unit\": {\r\n            \"type\": \"string\",\r\n            \"enum\": [\"celsius\", \"fahrenheit\"]\r\n          }\r\n        },\r\n        \"required\": [\"location\"]\r\n      }\r\n    }\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "https://api.openai.com/v1/chat/completions",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openai",
+								"com"
+							],
+							"path": [
+								"v1",
+								"chat",
+								"completions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create chat completion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{OPENAI_API_KEY}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"model\": \"gpt-3.5-turbo\",\r\n    \"messages\": [\r\n        {\r\n            \"role\": \"user\",\r\n            \"content\": \"When I go to work, I want a\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "https://api.openai.com/v1/chat/completions",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openai",
+								"com"
+							],
+							"path": [
+								"v1",
+								"chat",
+								"completions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Call the model with functions and the user’s input",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{OPENAI_API_KEY}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"model\": \"gpt-3.5-turbo-0613\",\r\n    \"messages\": [\r\n        {\r\n            \"role\": \"user\",\r\n            \"content\": \"What is the weather like in Boston?\"\r\n        }\r\n    ],\r\n    \"functions\": [\r\n        {\r\n            \"name\": \"get_current_weather\",\r\n            \"description\": \"Get the current weather in a given location\",\r\n            \"parameters\": {\r\n                \"type\": \"object\",\r\n                \"properties\": {\r\n                    \"location\": {\r\n                        \"type\": \"string\",\r\n                        \"description\": \"The city and state, e.g. San Francisco, CA\"\r\n                    },\r\n                    \"unit\": {\r\n                        \"type\": \"string\",\r\n                        \"enum\": [\r\n                            \"celsius\",\r\n                            \"fahrenheit\"\r\n                        ]\r\n                    }\r\n                },\r\n                \"required\": [\r\n                    \"location\"\r\n                ]\r\n            }\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "https://api.openai.com/v1/chat/completions",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openai",
+								"com"
+							],
+							"path": [
+								"v1",
+								"chat",
+								"completions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Completions",
+			"item": [
+				{
+					"name": "Create completion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{OPENAI_API_KEY}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"model\": \"text-davinci-003\",\r\n    \"prompt\": \"tell me about the lion\",\r\n    \"max_tokens\": 7,\r\n    \"temperature\": 0\r\n  }"
+						},
+						"url": {
+							"raw": "https://api.openai.com/v1/completions",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openai",
+								"com"
+							],
+							"path": [
+								"v1",
+								"completions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fine",
+			"item": [
+				{
+					"name": "Upload file",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{OPENAI_API_KEY}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "purpose",
+									"value": "fine-tune",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/azure openai/training.jsonl"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.openai.com/v1/files",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openai",
+								"com"
+							],
+							"path": [
+								"v1",
+								"files"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List files",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{OPENAI_API_KEY}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.openai.com/v1/files",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openai",
+								"com"
+							],
+							"path": [
+								"v1",
+								"files"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fine-tunes",
+			"item": [
+				{
+					"name": "Create fine-tune",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{OPENAI_API_KEY}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"training_file\": \"file-T0TbwVHnW6JIjYZDr8y4xC4M\"\r\n  }"
+						},
+						"url": {
+							"raw": "https://api.openai.com/v1/fine-tunes",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openai",
+								"com"
+							],
+							"path": [
+								"v1",
+								"fine-tunes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve fine-tune",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{OPENAI_API_KEY}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.openai.com/v1/fine-tunes/ft-QohoZ8oEDYSfRqpLjOkXhzw3",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openai",
+								"com"
+							],
+							"path": [
+								"v1",
+								"fine-tunes",
+								"ft-QohoZ8oEDYSfRqpLjOkXhzw3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List fine-tune events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{OPENAI_API_KEY}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.openai.com/v1/fine-tunes/ft-QohoZ8oEDYSfRqpLjOkXhzw3/events",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openai",
+								"com"
+							],
+							"path": [
+								"v1",
+								"fine-tunes",
+								"ft-QohoZ8oEDYSfRqpLjOkXhzw3",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List fine-tunes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{OPENAI_API_KEY}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.openai.com/v1/fine-tunes",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openai",
+								"com"
+							],
+							"path": [
+								"v1",
+								"fine-tunes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Model",
+			"item": [
+				{
+					"name": "Retrieve model",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{OPENAI_API_KEY}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.openai.com/v1/models/davinci",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openai",
+								"com"
+							],
+							"path": [
+								"v1",
+								"models",
+								"davinci"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List models",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{OPENAI_API_KEY}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.openai.com/v1/models",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openai",
+								"com"
+							],
+							"path": [
+								"v1",
+								"models"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
